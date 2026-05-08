@@ -1,6 +1,7 @@
 "use client";
 
-import Sidebar from "../components/Sidebar";
+import Image from "next/image";
+import Sidebar from "../../components/Sidebar";
 
 export default function Profile() {
   return (
@@ -9,8 +10,11 @@ export default function Profile() {
 
       <div className="flex-1 p-8">
         <div className="bg-white p-6 rounded-xl shadow max-w-lg">
-          <img
+          <Image
             src="/doctor.png"
+            alt="Dr Richard James"
+            width={160}
+            height={160}
             className="w-40 rounded-lg mb-4"
           />
 

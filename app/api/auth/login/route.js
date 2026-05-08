@@ -1,27 +1,33 @@
 import { connectDB } from "../../../../lib/mongodb";
-import User from "../../../../models/User";
 import bcrypt from "bcryptjs";
+import { NextResponse } from "next/server";
 
 export async function POST(req) {
   try {
-    await connectDB();
-
     const { email, password } = await req.json();
+    const db = await connectDB();
 
-    const user = await User.findOne({ email });
+    const user = await db.collection("users").findOne({ email });
 
     if (!user) {
-      return Response.json({ error: "User not found" }, { status: 400 });
+      return NextResponse.json({ error: "User not found" }, { status: 400 });
     }
 
     const isMatch = await bcrypt.compare(password, user.password);
 
     if (!isMatch) {
-      return Response.json({ error: "Invalid password" }, { status: 400 });
+      return NextResponse.json({ error: "Invalid password" }, { status: 400 });
     }
 
-    return Response.json({ message: "Login successful", user });
-  } catch (error) {
-    return Response.json({ error: "Server error" }, { status: 500 });
+    return NextResponse.json({
+      message: "Login successful",
+      user: {
+        _id: user._id,
+        name: user.name,
+        email: user.email,
+      },
+    });
+  } catch {
+    return NextResponse.json({ error: "Server error" }, { status: 500 });
   }
 }

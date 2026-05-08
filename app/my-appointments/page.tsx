@@ -17,19 +17,6 @@ export default function MyAppointments() {
   const [appointments, setAppointments] = useState<Appointment[]>([]);
 
   /* =========================
-     CHECK LOGIN
-  ========================= */
-  useEffect(() => {
-    const email = localStorage.getItem("userEmail");
-
-    if (!email) {
-      window.location.href = "/login";
-    } else {
-      fetchAppointments(email);
-    }
-  }, []);
-
-  /* =========================
      FETCH APPOINTMENTS
   ========================= */
   const fetchAppointments = async (email: string) => {
@@ -37,6 +24,33 @@ export default function MyAppointments() {
     const data = await res.json();
     setAppointments(data);
   };
+
+  /* =========================
+     CHECK LOGIN
+  ========================= */
+  useEffect(() => {
+    let active = true;
+    const email = localStorage.getItem("userEmail");
+
+    if (!email) {
+      window.location.href = "/login";
+    } else {
+      const loadAppointments = async () => {
+        const res = await fetch(`/api/appointments?email=${email}`);
+        const data = await res.json();
+
+        if (active) {
+          setAppointments(data);
+        }
+      };
+
+      loadAppointments();
+    }
+
+    return () => {
+      active = false;
+    };
+  }, []);
 
   /* =========================
      CANCEL APPOINTMENT

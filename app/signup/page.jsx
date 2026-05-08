@@ -44,7 +44,7 @@ export default function SignupPage() {
           message: data.message || "We could not create your account right now.",
         });
       }
-    } catch (error) {
+    } catch {
       setStatus({
         type: "error",
         message: "Something went wrong while creating your account.",

@@ -9,19 +9,14 @@ if (!uri) {
 /* =========================
 GLOBAL CACHE (for Next.js dev)
 ========================= */
-let client: MongoClient;
-let clientPromise: Promise<MongoClient>;
-
 declare global {
   var _mongoClientPromise: Promise<MongoClient> | undefined;
 }
 
-if (!global._mongoClientPromise) {
-  client = new MongoClient(uri);
-  global._mongoClientPromise = client.connect();
-}
+const clientPromise: Promise<MongoClient> =
+  global._mongoClientPromise ?? new MongoClient(uri).connect();
 
-clientPromise = global._mongoClientPromise;
+global._mongoClientPromise = clientPromise;
 
 /* =========================
 CONNECT FUNCTION

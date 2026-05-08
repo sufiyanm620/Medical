@@ -37,7 +37,22 @@ export default function AdminAppointments() {
   };
 
   useEffect(() => {
-    fetchAppointments();
+    let active = true;
+
+    const loadAppointments = async () => {
+      const res = await fetch("/api/appointments");
+      const data = await res.json();
+
+      if (active) {
+        setAppointments(data);
+      }
+    };
+
+    loadAppointments();
+
+    return () => {
+      active = false;
+    };
   }, []);
 
   /* =========================

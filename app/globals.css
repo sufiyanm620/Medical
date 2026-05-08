@@ -5,6 +5,8 @@
   --background-deep: #dceee8;
   --surface: rgba(255, 255, 255, 0.7);
   --surface-strong: #ffffff;
+  --font-display: "Iowan Old Style", "Palatino Linotype", "Book Antiqua", Georgia, serif;
+  --font-body: Inter, "Segoe UI", system-ui, -apple-system, BlinkMacSystemFont, sans-serif;
   --text: #15313b;
   --muted: #5f7980;
   --primary: #0f766e;

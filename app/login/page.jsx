@@ -28,7 +28,7 @@ export default function LoginPage() {
       } else {
         alert(data.message || "Login failed ❌");
       }
-    } catch (err) {
+    } catch {
       alert("Something went wrong 😢");
     }
 

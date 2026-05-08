@@ -2,6 +2,7 @@
 
 import { useState } from "react";
 import { useParams } from "next/navigation";
+import type { ChangeEvent, FormEvent } from "react";
 
 export default function BookPage() {
   const params = useParams();
@@ -16,11 +17,13 @@ export default function BookPage() {
 
   const [success, setSuccess] = useState("");
 
-  const handleChange = (e: any) => {
+  const handleChange = (
+    e: ChangeEvent<HTMLInputElement | HTMLTextAreaElement>
+  ) => {
     setForm({ ...form, [e.target.name]: e.target.value });
   };
 
-  const handleSubmit = async (e: any) => {
+  const handleSubmit = async (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
 
     try {
@@ -49,7 +52,7 @@ export default function BookPage() {
       } else {
         alert(data.error || "Something went wrong");
       }
-    } catch (err) {
+    } catch {
       alert("Server error");
     }
   };
